@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express')
 const {Pool} = require('pg')
-
+const cors = require('cors')
 const app = express()
+app.use(cors())
 
 const PORT = process.env.PRODUCT_SERVICE_PORT|| 3001
 
@@ -21,7 +22,7 @@ app.get('/products', async (req, res) => {
     }
     catch (err) {
         console.error('error', err.message)
-        res.status(500).send(' DB error')
+        res.status(500).json({error: err.message})
     }
 })
 app.listen(PORT, () => {

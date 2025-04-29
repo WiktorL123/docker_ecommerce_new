@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const Redis = require('ioredis');
+const cors = require('cors');
 
 
 
 const app = express();
+app.use(cors());
 const PORT = process.env.ORDER_SERVICE_PORT || 3002;
 
 

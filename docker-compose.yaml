@@ -46,6 +46,19 @@ services:
     networks:
       - backend
 
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "${API_GATEWAY_PORT}:3000"
+    env_file:
+      - .env
+    depends_on:
+      - product-service
+      - order-service
+    networks:
+      - backend
+
 volumes:
   pgdata:
 
