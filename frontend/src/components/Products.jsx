@@ -9,7 +9,7 @@ export default function Products(){
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("http://localhost:3001/products");
+                const response = await fetch("http://localhost:3000/products");
                 const json = await response.json();
                 if (!response.ok) {
                     throw  new Error(`error: ${json.error}`);
@@ -29,6 +29,7 @@ export default function Products(){
     }, [])
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
+    if (products.length === 0) return <p>brak produktow</p>;
     return (
         <div className="product-list">
             {products.map((product) => (

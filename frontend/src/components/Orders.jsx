@@ -8,12 +8,12 @@ export default function Orders() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch("http://localhost:3002/orders");
+                const response = await fetch("http://localhost:3000/orders");
                 const json = await response.json();
                 if (!response.ok) {
                     throw new Error(`error: ${json.error}`);
                 }
-                setOrders([json]); // zakładam, że to jeden obiekt, np. {status: 'connected', result: 'OK'}
+                setOrders(json);
             } catch (err) {
                 setError(err);
             } finally {
@@ -25,17 +25,12 @@ export default function Orders() {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
+    if (orders.length === 0) return <p>brak zamowien</p>
 
     return (
         <div className="product-list">
-            {orders.map((order, index) => (
-                <div key={index} className="product-item">
-                    {Object.entries(order).map(([key, value]) => (
-                        <p key={key}>
-                            <strong>{key}:</strong> {value}
-                        </p>
-                    ))}
-                </div>
+            {orders.map((order) => (
+                <div key={order.id}>id zamowienia {order.productId} : zamowienie nr{order.quantity}</div>
             ))}
         </div>
     );
