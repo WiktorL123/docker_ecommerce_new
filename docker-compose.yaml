@@ -34,6 +34,8 @@ services:
     build: ./product-service
     ports:
       - "${PRODUCT_SERVICE_PORT}:3001"
+    volumes:
+      - productstatus:/app/status
     depends_on:
       - database
     env_file:
@@ -91,6 +93,8 @@ services:
       - database
     networks:
       - backend
+      - cache
+      - database
     profiles:
       - dev
     environment:
@@ -99,6 +103,7 @@ services:
 volumes:
   pgdata:
   redisdata:
+  productstatus:
 
 networks:
   backend:
