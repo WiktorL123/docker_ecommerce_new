@@ -1,4 +1,9 @@
-FROM ubuntu:latest
-LABEL authors="wikto"
+FROM alpine:latest
 
-ENTRYPOINT ["top", "-b"]
+RUN apk add --no-cache curl postgresql-client redis
+
+COPY monitor.sh /monitor.sh
+
+RUN chmod +x /monitor.sh
+
+CMD ["sh", "/monitor.sh"]

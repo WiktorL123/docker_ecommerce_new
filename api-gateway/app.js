@@ -24,5 +24,5 @@ app.use('/orders', createProxyMiddleware({
 }));
 
 app.listen(PORT, () => {
-    console.log(`API Gateway is listening on port ${PORT}`);
+    console.log(`API Gateway is listening on port ${PORT}}`);
 });

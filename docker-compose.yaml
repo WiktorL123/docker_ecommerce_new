@@ -13,7 +13,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - backend
+      - database
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
   redis-cache:
@@ -21,7 +26,9 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - backend
+      - cache
+    volumes:
+      - redisdata:/data
 
   product-service:
     build: ./product-service
@@ -33,6 +40,7 @@ services:
       - .env
     networks:
       - backend
+      - database
 
 
   order-service:
@@ -45,6 +53,7 @@ services:
       - redis-cache
     networks:
       - backend
+      - cache
 
 
   api-gateway:
@@ -57,6 +66,7 @@ services:
       - product-service
       - order-service
     networks:
+      - frontend
       - backend
 
   frontend:
@@ -64,10 +74,27 @@ services:
     ports:
       - "${FRONTEND_PORT}:80"
     networks:
-      - backend
+      - frontend
     depends_on:
       - api-gateway
 
+
+  dev-monitor:
+    build:
+      context: ./dev-monitor
+      dockerfile: Dockerfile
+    depends_on:
+      - product-service
+      - order-service
+      - api-gateway
+      - redis-cache
+      - database
+    networks:
+      - backend
+    profiles:
+      - dev
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
 
 volumes:
   pgdata:
@@ -75,4 +102,10 @@ volumes:
 
 networks:
   backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+  database:
+    driver: bridge
+  cache:
     driver: bridge
