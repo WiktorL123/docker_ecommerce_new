@@ -1,0 +1,17 @@
+WEJSCIE DO KONTENERA z voluminem
+
+docker run -it --rm -v docker_ecommerce_new_productstatus:/data alpine sh
+Docker run -it - uruchom kontener w tle
+-rm -usun po zakonczeniu dzialania
+-v docker_ecommerce_new_productstatus - volumin o nazwie docker_ecommerce_new_productstatus
+nazwa kontenera volumina - nazwa_kontenera_nazwa_volumina_w_docker_compose
+: – oddziela nazwę woluminu od ścieżki montowania w kontenerze
+/data -mcieżka w kontenerze, gdzie wolumin zostanie podmontowany
+alpine sh - wykonah z alpine i sh
+WEJSCIE DO KONTENERA I SPRAWDZenie logow
+docker run --rm -v docker_ecommerce_new_productstatus:/data alpine cat /data/status.txt
+docker run -it - jak wyzej
+-rm - jak wyzej
+-v docker_ecommerce_new_productstatus jak wyzej
+alpine - wykonaj z alpine
+cat data/status.txt - wyswietl zawartosc

@@ -32,10 +32,10 @@ services:
 
   product-service:
     build: ./product-service
-    ports:
-      - "${PRODUCT_SERVICE_PORT}:3001"
+#    ports:
+#      - "${PRODUCT_SERVICE_PORT}:3001"
     volumes:
-      - productstatus:/app/status
+      - productstatus:/status
     depends_on:
       - database
     env_file:
@@ -47,8 +47,8 @@ services:
 
   order-service:
     build: ./order-service
-    ports:
-      - "${ORDER_SERVICE_PORT}:3002"
+#    ports:
+#      - "${ORDER_SERVICE_PORT}:3002"
     env_file:
       - .env
     depends_on:

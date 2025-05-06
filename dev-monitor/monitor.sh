@@ -6,12 +6,12 @@
 
  while [ "$i" -gt 0 ]; do
    echo "🟢 Checking product-service..."
-   curl -s http://product-service:3001/products >/dev/null \
+   curl -s http://api-gateway:3000/products >/dev/null \
      && echo "✅ Product-service OK" \
      || echo "❌ Product-service ERROR"
 
    echo "🟢 Checking order-service..."
-   curl -s http://order-service:3002/orders >/dev/null \
+   curl -s http://api-gateway:3000/orders >/dev/null \
      && echo "✅ Order-service OK" \
      || echo "❌ Order-service ERROR"
 

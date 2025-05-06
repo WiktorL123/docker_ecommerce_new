@@ -9,7 +9,7 @@ app.use('/products', createProxyMiddleware({
     target: 'http://product-service:3001/products',
     changeOrigin: true,
     pathRewrite: {
-        '^/products': '', // wtedy GET /products → GET /
+        '^/products': '',
     },
 }));
 
